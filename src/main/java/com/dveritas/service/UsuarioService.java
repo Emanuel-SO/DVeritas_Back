@@ -64,7 +64,7 @@ public class UsuarioService {
 			if (correo != null)
 				usuarioABuscar.setCorreo(correo);
 			if (password != null)
-				usuarioABuscar.setPassword(password);
+				usuarioABuscar.setPassword( SHAUtil.createHash(usuarioABuscar.getPassword()) );
 			if (avatar != null)
 				usuarioABuscar.setAvatar(avatar);
 			usuarioRepository.save(usuarioABuscar);
@@ -76,5 +76,27 @@ public class UsuarioService {
 	public long numeroUsuarios() {
         return usuarioRepository.contadorUsuarios();
     }
+	
+	// Leer ID usando el correo (Hugo)
+	
+		public Long obtenerIdUsuarioPorCorreo(String correo) {
+		    Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreo(correo);
+		    Usuario usuario = usuarioOptional.orElseThrow(() -> new IllegalStateException("El usuario con el correo " + correo + " no existe."));
+		    return usuario.getId();
+		}
 
+		
+	//Metodo para iniciar sesion  (Hugo)
+		public boolean loginCifrado(String correo, String password) {
+			boolean respuesta=false;
+			Optional<Usuario> usuario = usuarioRepository.findByCorreo(correo);
+			if (usuario.isPresent()) {
+				System.out.println("Password SHA: " + SHAUtil.createHash(password));
+				if (SHAUtil.verifyHash(password, usuario.get().getPassword()) ) {
+			//if (user.get().getPassword().equals(password)) {
+					respuesta=true;
+			}// if password
+		}//if isPresent
+			return respuesta;
+		}//login
 }

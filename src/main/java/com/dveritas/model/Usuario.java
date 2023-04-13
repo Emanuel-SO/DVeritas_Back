@@ -2,6 +2,7 @@ package com.dveritas.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,11 +30,15 @@ public class Usuario {
 	private String password;
 	private String avatar;
 	
-	 @OneToMany(mappedBy = "usuario")
-	    private List<Publicacion> publicaciones;
+	@OneToMany(mappedBy = "usuario")
+    private List<Publicacion> publicaciones;
+
+	 @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Like> likes;
 	
-	 @OneToMany(mappedBy = "usuario")
-	    private List<Like> likes;
+	 @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comentario> comentarios;
+
 	
 	
 	public Usuario() {

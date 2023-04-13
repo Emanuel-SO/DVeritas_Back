@@ -3,6 +3,7 @@ package com.dveritas.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,8 +35,12 @@ public class Publicacion {
     @JoinColumn(name = "id_usuario", referencedColumnName = "id")
     private Usuario usuario;
 	
-	@OneToMany(mappedBy = "publicacion")
+	@OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Like> likes;
+	
+	@OneToMany(mappedBy = "publicacion", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Comentario> comentarios;
+
 	
 	
 	
