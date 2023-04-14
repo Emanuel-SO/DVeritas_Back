@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+
 @Entity
 
 @Table(name="usuarios")
@@ -44,6 +45,7 @@ public class Usuario {
 	public Usuario() {
 		
 	}
+	
 	
 	public Usuario(Long id, String nombre, String correo, String password, String avatar) {
 		this.id = id;

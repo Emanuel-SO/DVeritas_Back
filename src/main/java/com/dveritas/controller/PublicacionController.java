@@ -1,7 +1,10 @@
 package com.dveritas.controller;
 
+
 import java.util.List;
 
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dveritas.model.Publicacion;
+
 import com.dveritas.service.PublicacionService;
+
 
 @CrossOrigin
 
@@ -22,12 +27,17 @@ import com.dveritas.service.PublicacionService;
 
 public class PublicacionController {
 
+	
+	
+	
 	private final PublicacionService publicacionService;
 	
-
 	public PublicacionController (PublicacionService publicacionService) {
 		this.publicacionService = publicacionService;
+		
 	}
+	
+	
 	
 	@GetMapping
 	public List<Publicacion> getPublicacion(){
@@ -40,10 +50,14 @@ public class PublicacionController {
 	}
 	
 	@PostMapping
-	public void postPublicacion(@RequestBody Publicacion publicacion) { 
-
-		publicacionService.crearPublicacion(publicacion); 
-	}
+	public ResponseEntity<?> crearPublicacion(@RequestBody Publicacion publicacion) {
+        try {
+            publicacionService.crearPublicacion(publicacion);
+            return ResponseEntity.ok("Publicación creada con éxito");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error al crear la publicación: " + e.getMessage());
+        }
+    }
 	
 	@DeleteMapping(path = "{Id}")
 	public void deletePublicacion(@PathVariable("Id") Long Id) {
