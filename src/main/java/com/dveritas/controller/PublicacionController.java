@@ -50,8 +50,13 @@ public class PublicacionController {
 		publicacionService.borrarPublicacion(Id);
 	}
 	
-	  @GetMapping("totalpublicaciones")
-	   public long totalPublicaciones() {
-	        return publicacionService.numeroPublicaciones();
-	    }
+	@GetMapping("totalpublicaciones")
+	public long totalPublicaciones() {
+        return publicacionService.numeroPublicaciones();
+    }
+	
+	@GetMapping(path="/usuario/{id}")
+    public List<Publicacion> getPublicacionUsuario(@PathVariable("id")Long id) {
+        return publicacionService.leerPublicacionUsuario(id);
+    }
 }

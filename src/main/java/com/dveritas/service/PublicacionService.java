@@ -50,4 +50,7 @@ public class PublicacionService {
         return publicacionRepository.contadorPublicaciones();
     }
 	
+	public List<Publicacion> leerPublicacionUsuario(Long Id) {
+        return publicacionRepository.findByUsuarioId(Id);
+    }
 }
